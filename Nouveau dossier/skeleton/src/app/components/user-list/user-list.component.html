@@ -1,0 +1,55 @@
+<div class="cardSize">
+    <div class="row">
+      <div class="col-sm-12">
+        <app-card cardTitle="Customer account " [options]="false">
+          <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" class="table table-striped row-border table-hover">
+              <thead>
+                <tr>
+                  <!-- <th>Folder name</th> -->
+                  <th>Company name</th>
+                  <th>Email</th>
+                  <!-- <th>Creation date</th> -->
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listuset">
+                  <!-- <td>{{item.folderId.name}}</td> -->
+                  <td>{{item.company}}</td>
+                  <td>{{item.email}}</td>
+                  <!-- <td>{{item.creationDate}}</td> -->
+                  <td>
+                    <div *ngIf="item.valid" class="form-group">
+                      <div class="switch switch-success d-inline m-r-10">
+                        <input type="checkbox" id="switch-s-1" (change)="onCheckboxChange(item._id, false)" checked>
+                        <label for="switch-s-1" class="cr"></label>
+                      </div>
+                      <label>Disable</label>
+                    </div>
+                    <div *ngIf="!item.valid" class="form-group">
+                      <div class="switch switch-danger d-inline m-r-10">
+                        <input type="checkbox" id="switch-d-1" (change)="onCheckboxChange2(item._id, true)" checked>
+                        <label for="switch-d-1" class="cr"></label>
+                      </div>
+                      <label>Enable</label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <!-- <th>Folder name</th> -->
+                  <th>Company name</th>
+                  <th>Email</th>
+                  <!-- <th>Creation date</th> -->
+                  <!-- <th>Action</th> -->
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+  

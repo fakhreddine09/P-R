@@ -1,0 +1,78 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{mytitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form class="form" name="form" #f="ngForm" (ngSubmit)="this.Onsubmit(f)">
+
+        <div class="form-group">
+            <label for="sla">Title :</label>
+            <input type="text" class="form-control" placeholder="Title" id="title" name="title" ngModel
+                [(ngModel)]="this.model.title" #title="ngModel" required>
+            <div *ngIf="title.touched && title.errors?.required" class="error">Title required</div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="sla">Start Date :</label>
+            <input type="date" class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="startDate" 
+                id="startDate" name="startDate" ngModel [(ngModel)]="this.model.startDate" #startDate="ngModel" required>
+            <div *ngIf="startDate.touched && startDate.errors?.required" class="error">Start Date required</div>
+        </div>
+        <div class="form-group">
+            <label for="sla">End Date :</label>
+            <input type="date" class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="endDate" 
+                id="endDate" name="endDate" ngModel [(ngModel)]="this.model.endDate" #endDate="ngModel" required>
+            <div *ngIf="endDate.touched && endDate.errors?.required" class="error">End Date required</div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputState">Teams:</label>
+            <select id="inputState" class="form-control" [(ngModel)]="this.model.technicien" #technicien="ngModel"
+                name="technicien" required>
+                <ng-container *ngFor="let item of this.listTech">
+                    <option value="{{item._id}}" selected>{{item.firstName+' '+item.lastName+' '+item.niveauEscalade}}</option>
+                </ng-container>
+            </select>
+            <div class="invalid-feedback" *ngIf="technicien.touched && technicien.errors?.required" class="error">
+                Teams member required </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="inputState">Site Name:</label>
+            <select id="inputState" class="form-control" [(ngModel)]="this.model.siteID" #siteID="ngModel" name="siteID"
+                required>
+                <ng-container *ngFor="let item of this.listSites">
+                    <option value="{{item._id}}" selected>{{item.nomSite+' '+item.adress}}</option>
+                </ng-container>
+            </select>
+            <div class="invalid-feedback" *ngIf="siteID.touched && siteID.errors?.required" class="error">Site Name
+                required </div>
+        </div>
+
+
+        <div class="form-group" *ngIf="!this.add">
+            <label for="inputState">Status:</label>
+            <select id="inputState" class="form-control" [(ngModel)]="this.model.status" #status="ngModel" name="status"
+                required>
+               
+                    <option value="In progress" selected>In progress</option>
+                    <option value="Done" selected>Done</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="status.touched && status.errors?.required" class="error">Site Name
+                required </div>
+        </div>
+
+        <div class="modal-footer">
+            <button *ngIf="!this.add" type="submit" [disabled]="f.invalid"
+                class="btn btn-outline-warning">Update</button>
+
+            <button *ngIf="this.add" type="submit" [disabled]="f.invalid" class="btn btn-outline-primary">Save</button>
+            <button type="button" class="btn btn-outline-dark"
+                (click)="activeModal.close('Close click')">Fermer</button>
+        </div>
+    </form>
+</div>

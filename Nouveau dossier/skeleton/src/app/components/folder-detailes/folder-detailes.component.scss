@@ -1,0 +1,36 @@
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+  }
+
+  .centered-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Ajustez la hauteur selon vos besoins */
+    text-align: center;
+    border: 1px solid #ccc; /* Optionnel : pour mieux voir les bordures de la cellule */
+    vertical-align: middle;
+  }
+  .centered-cell2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Ajustez la hauteur selon vos besoins */
+    text-align: center;
+    border: 1px solid #ccc; /* Optionnel : pour mieux voir les bordures de la cellule */
+    vertical-align: middle;
+  }
+  // #tabColler1.table-hover tbody tr:hover {
+  //   background-color: rgb(138, 188, 226) !important;
+  // }
+
+
+  
+
+
+  
+  

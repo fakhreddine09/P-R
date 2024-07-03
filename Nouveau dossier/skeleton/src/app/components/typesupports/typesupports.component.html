@@ -1,0 +1,53 @@
+<div class="row"> 
+  <div class="col-sm-12">
+      <div class="card cardSize" cardTitle="Hello Card">
+          <div class="card-header">
+              <div class="row">
+                  <div class="col text-left">
+                    <!-- <h5><a href="javascript:">Collapsible Group Item #3</a></h5> -->
+                    <h6>Support Type List</h6>
+                  </div>
+                  <div class="col text-right">
+                    <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                    (click)="openAddTypeSupport()"  >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-plus">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+          </div>
+          <div class="card-body">
+
+
+            <div class="form-group">
+              <input type="text" class="form-control" id="inputAddress"  [(ngModel)]="term" placeholder="Search">
+            </div>
+        <section id="task-container" >
+          <ul >
+            <li *ngFor="let item of listTypeSupport" >
+              <div class="row">
+
+
+                <div class="col text-left">
+                  
+                  <p>{{item.supportName}}</p>
+                </div>
+
+                <div class="col text-right">
+                  
+                  <i (click)="opendelleteTypeSupport(item._id)" class="fas fa-trash-alt text-danger"></i>&nbsp;
+                  <i (click)="openUpdateTypeSupport(item)" class="fas fa-edit text-warning"></i>
+                  
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+</div>
+</div>

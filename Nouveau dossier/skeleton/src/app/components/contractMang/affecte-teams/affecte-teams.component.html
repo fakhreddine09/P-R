@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{title}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="form" name="form" #f="ngForm" (ngSubmit)="this.Onsubmit(f)">
+    <br>
+    <div class="form-group">
+      <label for="">Technician </label>
+      <select class="form-control form-control-default" [(ngModel)]="this.model.tech" #tech="ngModel" name="tech"
+        required>
+        <option *ngIf="listTechnicvien.length != 0" [value]="" disabled>select Technician</option>
+
+        <ng-container *ngFor="let item of listTechnicvien">
+          <option [value]="item._id">{{item.firstName+' '+item.lastName}}</option>
+        </ng-container>
+        <ng-container *ngIf="listTechnicvien.length == 0">
+          <option disabled >No Technician Available</option>
+        </ng-container>
+      </select>
+      <div class="invalid-feedback" *ngIf="tech.touched && tech.errors?.required" class="error">Technician required
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Role</label>
+      <select name="select" class="form-control form-control-default" [(ngModel)]="this.model.role" #role="ngModel"
+        name="role" required (change)="getValiousTypeAccount($event)" >
+        <option  value="equipeTechnique" >Team member</option>
+        <option  *ngIf="this.addL3" value="responsableEquipeTechnique">Technical Team Manager</option>
+      </select>
+      <div class="invalid-feedback" *ngIf="role.touched && role.errors?.required" class="error">Role required </div>
+    </div>
+    <div class="form-group">
+      <label for="">Climbing level </label>
+      <select name="select" class="form-control form-control-default"
+       [(ngModel)]="this.model.niveauEscalade" (change)="getValiousNiveauEscalade($event)" #niveauEscalade="ngModel" name="niveauEscalade" required>
+        <option value="l1">Level 1</option>
+        <option value="l2">Level 2</option>
+        <option value="l3">Level 3</option>
+      </select>
+      <div class="invalid-feedback" *ngIf="niveauEscalade.touched && niveauEscalade.errors?.required" class="error">
+        Climbing level required </div>
+    </div>
+    <div class="modal-footer">
+      <button *ngIf="!this.add" type="submit" [disabled]="f.invalid" class="btn btn-outline-warning">Update</button>
+      <button *ngIf="this.add" type="submit" [disabled]="f.invalid" class="btn btn-outline-primary">Save</button>
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Fermer</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,41 @@
+
+ 
+
+            <app-card cardTitle="Technician account" [options]="false">
+                <div class="row">
+                    <div class="col text-left">
+                      <!-- <h5 class="mb-3">Teams</h5> -->
+                      <br>
+                    </div>
+                    <div class="col text-right">
+                      <!-- <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                       >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" (click)="openAdd()"
+                          class="feather feather-plus">
+                          <line x1="12" y1="5" x2="12" y2="19"></line>
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </button> -->
+                    </div>
+                </div>
+                <br>
+
+
+                <div class="table-responsive" >
+                    <table style="text-align: center;margin-left:20px;margin-right: 20px;" id="dataTable" datatable [dtOptions]="dtExportButtonOptions" class="table table-bordered table-hover">
+                        <!-- <thead class="thead-dark"> -->
+                          <thead class="bg-primary"> <!-- Add Bootstrap class for dark header color -->
+                            <tr>
+
+                          </tr>
+                        </thead>
+                        <tbody style="background-color: rgb(204, 228, 255);" >
+                          <!-- Data rows will be populated here -->
+                        </tbody>
+                      </table>
+                </div>
+              </app-card>        
+            
+          
+      

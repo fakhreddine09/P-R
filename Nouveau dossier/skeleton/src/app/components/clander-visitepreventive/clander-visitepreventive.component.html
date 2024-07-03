@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Full Calendar" cardClass="elite-calendar" [options]="false">
+      <div class="table-responsive">
+        <div class="row">
+          <div class="col">
+            <div style="background-color: #ffff00; color: black; text-align: center;">
+              Pending
+            </div>
+          </div>
+          <div class="col">
+            <div style="background-color: #0000ff; color: rgb(255, 255, 255); text-align: center;">
+              In progress
+            </div>
+          </div>
+          <div class="col">
+            <div style="background-color: #33cc33; color: rgb(255, 255, 255); text-align: center;">
+              Done
+            </div>
+          </div>
+        </div>
+        <br><br>
+        <full-calendar [options]="calendarOptions"></full-calendar>
+      </div>
+      <br>
+    </app-card>
+  </div>
+</div>
+<app-animation-modal [modalID]="'modal-1'" [modalClass]="'md-effect-1'">
+  <h3 *ngIf="this.infoEvent.vistStatus =='In progress'" class="bg-primary">{{this.infoEvent.title}}</h3>
+  <h3 *ngIf="this.infoEvent.vistStatus =='Pending'" class="bg-warning">{{this.infoEvent.title}}</h3>
+  <h3 *ngIf="this.infoEvent.vistStatus =='Done'" class="bg-success">{{this.infoEvent.title}}</h3>
+  <div>
+    <div class="row invoive-info">
+      <div class="col-md-6 col-xs-12 invoice-client-info">
+        <h6>Contract Information :</h6>
+        <table class="table table-responsive invoice-table invoice-order table-borderless">
+          <tbody>
+            <tr>
+              <th>Start Date :&ensp;&ensp;</th>
+              <td>&ensp;&ensp;{{this.infoEvent.startDateContract}}</td>
+            </tr>
+            <tr>
+              <th>End Date :</th>
+              <td>&ensp;&ensp;{{this.infoEvent.endDateContract}}</td>
+            </tr>
+
+            <tr>
+              <th>Type:</th>
+              <td>
+                &ensp;&ensp;{{this.infoEvent.typeContract}}
+              </td>
+            </tr>
+            <tr>
+              <th>Nature:</th>
+              <td>
+                &ensp;&ensp;{{this.infoEvent.natureContract}}
+              </td>
+            </tr>
+            <th>Status :</th>
+            <td>
+              <span *ngIf="this.infoEvent.contractSatus" class="label label-success">Active</span>
+              <span *ngIf="!this.infoEvent.contractSatus" class="label label-danger">Inactive </span>
+            </td>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <h6>Visit Information :</h6>
+        <table class="table table-responsive invoice-table invoice-order table-borderless">
+          <tbody>
+            <tr>
+              <th>Start Date :</th>
+              <td>&ensp;&ensp;{{this.infoEvent.startDate}}</td>
+            </tr>
+            <tr>
+              <th>End Date :</th>
+              <td>&ensp;&ensp;{{this.infoEvent.endDate}}</td>
+            </tr>
+            <tr>
+              <th>Site Name :</th>
+              <td>
+                &ensp;&ensp;{{this.infoEvent.siteName}}
+              </td>
+            </tr>
+            <tr>
+              <th>Site Address:</th>
+              <td>
+                &ensp;&ensp;{{this.infoEvent.siteAdres}}
+              </td>
+            </tr>
+            <tr>
+              <th>Technician:</th>
+              <td>
+                &ensp;&ensp;{{this.infoEvent.technicienName}}
+              </td>
+            </tr>
+            <tr>
+              <th>Climbing level:</th>
+              <td>
+                {{this.infoEvent.LEscalade}}
+              </td>
+            </tr>
+            <!--  -->
+            <tr *ngIf="this.infoEvent.vistStatus =='Pending'">
+              <th>Status :</th>
+              <td>
+                <span class="label label-warning">Pending</span>
+              </td>
+
+            </tr>
+            <tr *ngIf="this.infoEvent.vistStatus =='In progress'">
+              <th>Status :</th>
+              <td>
+                <span class="label label-primary">In progress</span>
+              </td>
+
+            </tr>
+            <tr *ngIf="this.infoEvent.vistStatus =='Done'">
+              <th>Status :</th>
+              <td>
+                <span class="label label-success">Done</span>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <button *ngIf="this.infoEvent.vistStatus =='Done'" (click)="closeMyModal($event)" class="btn btn-success md-close">Close</button>
+    <button *ngIf="this.infoEvent.vistStatus =='In progress'" (click)="closeMyModal($event)" class="btn btn-primary md-close">Close</button>
+    <button *ngIf="this.infoEvent.vistStatus =='Pending'" (click)="closeMyModal($event)" class="btn btn-warning md-close">Close</button>
+  </div>
+</app-animation-modal>

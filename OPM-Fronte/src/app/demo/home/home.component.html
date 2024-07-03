@@ -1,0 +1,252 @@
+ <div class="card mx-1">
+  <div class="card-header">
+    <h4>Dashboard</h4>
+  </div>
+  <div class="card-body" style="min-height: 400px;">
+    <div class="row justify-content-between">
+      <ng-container *ngIf="isLoading; else ShowData">
+        <div
+          style="width: 100%; height: 400px; text-align: center; font-size: 1rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+          <div class="">
+            <i class="pi pi-spinner pi-spin"></i>
+            <br>
+            <span>Loading...</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #ShowData>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <!-- Project statustic start -->
+  <div class="col-lg-12">
+    <div class="card proj-progress-card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-3 col-md-6">
+            <h6>Published Project</h6>
+            <h5 class="m-b-25">532<span class="text-c-red m-l-10 m-r-10">+1.69%</span></h5>
+            <div class="progress">
+              <div class="progress-bar progress-c-red bg-c-red" style="width:25%"></div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <h6>Completed Task</h6>
+            <h5 class="m-b-25">4,569<span class="text-c-blue m-l-10 m-r-10">-0.5%</span></h5>
+            <div class="progress">
+              <div class="progress-bar progress-c-blue bg-c-blue" style="width:65%"></div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <h6>Successfull Task</h6>
+            <h5 class="m-b-25">89%<span class="text-c-green m-l-10 m-r-10">+0.99%</span></h5>
+            <div class="progress">
+              <div class="progress-bar progress-c-green bg-c-green" style="width:85%"></div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <h6>Ongoing Project</h6>
+            <h5 class="m-b-25">365<span class="text-c-yellow m-l-10 m-r-10">+0.35%</span></h5>
+            <div class="progress">
+              <div class="progress-bar progress-c-yellow bg-c-yellow" style="width:45%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Project statustic end -->
+  <!-- project-ticket start -->
+  <div class="col-xl-4 col-md-12">
+    <div class="card proj-t-card">
+      <div class="card-body">
+        <div class="row align-items-center m-b-30">
+          <div class="col-auto">
+            <i class="far fa-calendar-check text-c-red f-30"></i>
+          </div>
+          <div class="col p-l-0">
+            <h6 class="m-b-5">Ticket Answered</h6>
+            <h6 class="m-b-0 text-c-red">Live Update</h6>
+          </div>
+        </div>
+        <div class="row align-items-center text-center">
+          <div class="col">
+            <h6 class="m-b-0">327</h6>
+          </div>
+          <div class="col"><i class="fas fa-exchange-alt text-c-red f-18"></i></div>
+          <div class="col">
+            <h6 class="m-b-0">10 Days</h6>
+          </div>
+        </div>
+        <h6 class="pt-badge bg-c-red">53%</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6">
+    <div class="card proj-t-card">
+      <div class="card-body">
+        <div class="row align-items-center m-b-30">
+          <div class="col-auto">
+            <i class="fas fa-paper-plane text-c-green f-30"></i>
+          </div>
+          <div class="col p-l-0">
+            <h6 class="m-b-5">Project Launched</h6>
+            <h6 class="m-b-0 text-c-green">Live Update</h6>
+          </div>
+        </div>
+        <div class="row align-items-center text-center">
+          <div class="col">
+            <h6 class="m-b-0">3 Year</h6>
+          </div>
+          <div class="col"><i class="fas fa-exchange-alt text-c-green f-18"></i></div>
+          <div class="col">
+            <h6 class="m-b-0">623</h6>
+          </div>
+        </div>
+        <h6 class="pt-badge bg-c-green">76%</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6">
+    <div class="card proj-t-card">
+      <div class="card-body">
+        <div class="row align-items-center m-b-30">
+          <div class="col-auto">
+            <i class="fas fa-lightbulb text-c-yellow f-30"></i>
+          </div>
+          <div class="col p-l-0">
+            <h6 class="m-b-5">Unique Innovation</h6>
+            <h6 class="m-b-0 text-c-yellow">Live Update</h6>
+          </div>
+        </div>
+        <div class="row align-items-center text-center">
+          <div class="col">
+            <h6 class="m-b-0">1 Month</h6>
+          </div>
+          <div class="col"><i class="fas fa-exchange-alt text-c-yellow f-18"></i></div>
+          <div class="col">
+            <h6 class="m-b-0">248</h6>
+          </div>
+        </div>
+        <h6 class="pt-badge bg-c-yellow">73%</h6>
+      </div>
+    </div>
+  </div>
+  <!-- project-ticket end -->
+  <!-- ticket, proj, clent start -->
+  <div class="col-xl-3 col-md-6">
+    <div class="card ticket-card">
+      <div class="card-body">
+        <p class="m-b-25 bg-c-red lbl-card"><i class="fas fa-folder-open m-r-5"></i> Open Tickets</p>
+        <div class="text-center">
+          <h2 class="m-b-0 d-inline-block text-c-red">128</h2>
+          <p class="m-b-0 d-inline-block">Tickets</p>
+          <p class="m-b-0 m-t-10"><i class="fas fa-caret-down m-r-10 f-18 text-c-red"></i>From Previous Month</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6">
+    <div class="card ticket-card">
+      <div class="card-body">
+        <p class="m-b-25 bg-c-blue lbl-card"><i class="fas fa-file-archive m-r-5"></i> Close Tickets</p>
+        <div class="text-center">
+          <h2 class="m-b-0 d-inline-block text-c-blue">134</h2>
+          <p class="m-b-0 d-inline-block">Tickets</p>
+          <p class="m-b-0 m-t-10"><i class="fas fa-caret-up m-r-10 f-18 text-c-blue"></i>From Previous Month</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6">
+    <div class="card ticket-card">
+      <div class="card-body">
+        <p class="m-b-25 bg-c-green lbl-card"><i class="fas fa-users m-r-5"></i> New Clients</p>
+        <div class="text-center">
+          <h2 class="m-b-0 d-inline-block text-c-green">307</h2>
+          <p class="m-b-0 d-inline-block">Clients</p>
+          <p class="m-b-0 m-t-10"><i class="fas fa-caret-up m-r-10 f-18 text-c-green"></i>From Previous Month</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6">
+    <div class="card ticket-card">
+      <div class="card-body">
+        <p class="m-b-25 bg-c-yellow lbl-card"><i class="fas fa-database m-r-5"></i> New Orders</p>
+        <div class="text-center">
+          <h2 class="m-b-0 d-inline-block text-c-yellow">231</h2>
+          <p class="m-b-0 d-inline-block">Orders</p>
+          <p class="m-b-0 m-t-10"><i class="fas fa-caret-up m-r-10 f-18 text-c-yellow"></i>From Previous Month</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ticket, proj, clent end -->
+  <!-- analytic card start -->
+  <div class="col-xl-4 col-md-12">
+    <div class="card analytic-card bg-c-green">
+      <div class="card-body">
+        <div class="row align-items-center m-b-25">
+          <div class="col-auto">
+            <i class="fas fa-shopping-cart text-c-green f-18 analytic-icon"></i>
+          </div>
+          <div class="col text-right">
+            <h3 class="m-b-5 text-white">15,678</h3>
+            <h6 class="m-b-0 text-white">Total Sales</h6>
+          </div>
+        </div>
+        <p class="m-b-0  text-white d-inline-block">Total Income : </p>
+        <h5 class=" text-white d-inline-block m-b-0 m-l-10">$2,451</h5>
+        <h6 class="m-b-0 d-inline-block  text-white float-right"><i class="fas fa-caret-up m-r-10 f-18"></i>10%</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6">
+    <div class="card analytic-card bg-c-blue">
+      <div class="card-body">
+        <div class="row align-items-center m-b-25">
+          <div class="col-auto">
+            <i class="fas fa-users text-c-blue f-18 analytic-icon"></i>
+          </div>
+          <div class="col text-right">
+            <h3 class="m-b-5 text-white">1,678</h3>
+            <h6 class="m-b-0 text-white">Total Users</h6>
+          </div>
+        </div>
+        <p class="m-b-0 text-white d-inline-block">Total Revenue : </p>
+        <h5 class="text-white d-inline-block m-b-0 m-l-10">$2,451</h5>
+        <h6 class="m-b-0 d-inline-block text-white float-right"><i class="fas fa-caret-up m-r-10 f-18"></i>30%</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6">
+    <div class="card analytic-card bg-c-red">
+      <div class="card-body">
+        <div class="row align-items-center m-b-25">
+          <div class="col-auto">
+            <i class="fas fa-file-code text-c-red f-18 analytic-icon"></i>
+          </div>
+          <div class="col text-right">
+            <h3 class="m-b-5 text-white">15,678</h3>
+            <h6 class="m-b-0 text-white">Total Project</h6>
+          </div>
+        </div>
+        <p class="m-b-0 d-inline-block text-white">Active Projects : </p>
+        <h5 class="text-white d-inline-block m-b-0 m-l-10">$2,451</h5>
+        <h6 class="m-b-0 d-inline-block text-white float-right"><i class="fas fa-caret-down m-r-10 f-18"></i>10%</h6>
+      </div>
+    </div>
+  </div>
+  <!-- project-ticket end -->
+            
+              
+            </div>
+          </div>
+          
+        </div>
+
+      </ng-template>
+    </div>
+  </div>
+</div>

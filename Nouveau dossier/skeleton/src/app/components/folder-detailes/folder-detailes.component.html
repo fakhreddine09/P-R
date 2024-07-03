@@ -1,0 +1,829 @@
+<div class="row">
+  <div class="col-xl-4 col-lg-12 task-detail-right">
+    <app-card [customHeader]="true" [options]="false">
+      <div class="app-card-header" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
+        <div class="row">
+          <div class="col text-left">
+            <h5 class="mb-3"><a href="javascript:"><i class="fas fa-file-contract mr-2"></i>Contracts List</a></h5>
+          </div>
+          <div class="col text-right">
+            <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+              (click)="openAddContract()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-plus">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <table style="text-align: center;" id="collapseExample" [ngbCollapse]="isCollapsed" class="table table-hover">
+        <tbody *ngIf="this.newListContract.length == 0">
+          <tr>
+            <td class="centered-cell">
+              <h4>No contract found</h4>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="this.newListContract.length != 0">
+          <tr *ngFor="let item of this.newListContract">
+            <td
+              style="word-wrap: break-word; white-space: normal;overflow: hidden;text-overflow: ellipsis;max-width: 200px;">
+              <button type="button" (click)="showInfoContract(item)"
+                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <span>{{item.type}}</span>
+                <i class="fas fa-trash-alt text-danger" (click)="deleteContract(item._id)"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </app-card>
+    <app-card [customHeader]="true" [options]="false">
+      <div class="app-card-header" (click)="isCollapsed2 = !isCollapsed2" [attr.aria-expanded]="!isCollapsed2">
+        <div class="row">
+          <div class="col text-left">
+            <h5 class="mb-3"><a href="javascript:"><i class="fas fa-building m-r-5"></i>Sites List</a></h5>
+          </div>
+          <div class="col text-right">
+            <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+              (click)="openAddSites()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-plus">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <table style="text-align: center;" class="table table-hover" id="collapseExample2" [ngbCollapse]="isCollapsed2">
+        <tbody style="text-align: center;" *ngIf="this.newListSites.length == 0">
+          <tr>
+            <td class="centered-cell">
+              <h4>No Sites found</h4>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="this.newListSites.length != 0">
+          <tr *ngFor="let item of this.newListSites">
+            <td>
+              <button type="button" (click)="showInfoSites(item)"
+                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <span>{{item.nomSite}}</span>
+                <i class="fas fa-trash-alt text-danger" (click)="deleteSite(item._id)"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </app-card>
+    <app-card [customHeader]="true" [options]="false">
+      <div class="app-card-header" (click)="isCollapsed3 = !isCollapsed3" [attr.aria-expanded]="!isCollapsed3">
+        <div class="row">
+          <div class="col text-left">
+            <h5 class="mb-3"><a href="javascript:"><i class="fas fa-file-alt m-r-5"></i>Attached Files</a></h5>
+          </div>
+          <div class="col text-right">
+            <ng-container>
+              <button (click)="oppenAddFile()" id="edit-btn" type="button"
+                class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-plus">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <ul *ngIf="this.newListOfFiles.length == 0" class="media-list p-0" id="collapseExample3"
+        [ngbCollapse]="isCollapsed3">
+        <li class="media d-flex m-b-15">
+          <div style="text-align: center;" class="media-body">
+            <h4>No Attached Files</h4>
+          </div>
+        </li>
+      </ul>
+      <!-- <perfect-scrollbar> -->
+      <ul *ngIf="this.newListOfFiles.length != 0" class="media-list p-0" id="collapseExample3"
+        [ngbCollapse]="isCollapsed3">
+        <ng-container *ngFor="let item of this.newListOfFiles">
+          <li class="media d-flex m-b-15">
+            <div class="m-r-20 file-attach">
+              <!-- Word Document -->
+              <i *ngIf="retertTypefile(item.fileName) === 'DOCX'" class="far fa-file-word f-28 text-muted"></i>
+              <!-- PDF Document -->
+              <i *ngIf="retertTypefile(item.fileName) === 'PDF'" class="far fa-file-powerpoint f-28 text-muted"></i>
+              <!-- Image File -->
+              <i *ngIf="['JPEG', 'JPG', 'PNG', 'GIF'].includes(retertTypefile(item.fileName))"
+                class="far fa-image f-28 text-muted"></i>
+              <!-- Other Types -->
+              <i *ngIf="!['DOCX', 'PDF', 'JPEG', 'JPG', 'PNG', 'GIF'].includes(retertTypefile(item.fileName))"
+                class="far fa-file f-28 text-muted"></i>
+            </div>
+            <div class="media-body">
+              <a href="javascript:" class="m-b-5 d-block text-secondary">{{item.title}}</a>
+              <div class="text-muted">
+                <span> Uploaded on <a href="javascript:" class="text-secondary">{{item.uploadDate |
+                    date:'yyyy-MM-dd'}}</a></span>
+              </div>
+            </div>
+            <div class="float-right text-muted">
+              <i (click)="downloadFile(item.path)" class="fas fa-download f-18"></i>
+              <i (click)="deleteFile(item._id)" class="fas fa-trash-alt f-18 ml-2"></i>
+            </div>
+          </li>
+        </ng-container>
+        <!-- ****************************eqipemont *************************** -->
+      </ul>
+      <!-- </perfect-scrollbar> -->
+    </app-card>
+  </div>
+  <div class="col-xl-8 col-lg-12">
+    <!-- <h1>dddd</h1> -->
+    <!-- <app-card *ngIf="this.showDataContract == true" [customHeader]="true" [options]="false" class="shadow-lg"> -->
+    <div class="filter-bar invoice-list">
+      <nav class="navbar m-b-30 p-10 text-light">
+        <!-- class="card-title text-light" -->
+        <div class="row">
+          <div class="col">
+            <h4 [style.color]="this.foldetIfo.colorfoldr">{{this.foldetIfo.name}}</h4>
+          </div>
+        </div>
+        <div class="nav-item nav-grid" *ngIf="this.foldetIfo.logo">
+          <!-- <span class="m-r-15">View Mode: </span> -->
+          <img [src]="this.foldetIfo.logo.path" alt="" width="50px" height="40px" srcset="" style="">
+        </div>
+      </nav>
+    </div>
+    <!-- </app-card> -->
+    <app-card *ngIf="this.showDataContract == true" [customHeader]="true" [options]="false" class="shadow-lg">
+      <div class="app-card-header">
+        <ng-container>
+          <h5 class="mb-3">
+            <i class="fas fa-file-contract m-r-5 text-primary"></i>
+            {{this.newInfoOneContract.type+' - '+this.newInfoOneContract.nature}}
+          </h5>
+          <button (click)="goToTickets()" class="btn btn-primary float-right f-14">
+            <i class="fas fa-ticket-alt m-r-5"></i>Check Tickets
+          </button>
+        </ng-container>
+      </div>
+      <div class="m-b-20">
+        <div class="row">
+          <div class="col text-left">
+            <h5 class="mb-3">Information about the Contract </h5>
+            <br>
+          </div>
+          <div class="col text-right">
+            <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+              (click)="openUpdateContract()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-edit">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19 3 20 4 16l12.5-12.5z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="m-b-20 col-sm-12">
+          <div *ngIf="this.newInfoOneContract.type == 'INFOGERANCE'" class="row">
+            <div class="col-md-12 col-lg-2">
+              <div class="text-primary f-14 m-b-10" style="color: rgb(255, 0, 0);">
+                <i class="far fa-calendar-alt"></i>&nbsp; Start date
+              </div>
+              <hr>
+              <ng-container>
+                <div class="text-primary f-14 m-b-10">
+                  <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                    <div class="media mb-2">
+                      <div class="media-body">
+                        <h6>{{this.newInfoOneContract.startDate | date: 'dd-MM-yyyy'}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+            <div class="col-md-12 col-lg-2">
+              <div class="text-primary f-14 m-b-10">
+                <i class="far fa-calendar-alt"></i>&nbsp; End date
+              </div>
+              <hr>
+
+              <div class="text-primary f-14 m-b-10">
+                <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                  <div class="media mb-2">
+                    <div class="media-body">
+                      <h6>{{this.newInfoOneContract.endDate | date: 'dd-MM-yyyy'}}</h6>
+                      <!-- <p>{{this.responsableEqipe.email}}</p> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div class="col-md-12 col-lg-2">
+              <div class="text-primary f-14 m-b-10">
+                <i class="far  fa-clock"></i>&nbsp; SLA
+              </div>
+              <hr>
+              <ng-container>
+                <div class="text-primary f-14 m-b-10">
+                  <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                    <div class="media mb-2">
+                      <div class="media-body">
+                        <h6>{{this.newInfoOneContract.sla + ' H'}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="col-md-12 col-lg-2">
+              <div class="text-primary f-14 m-b-10" style="color: rgb(255, 0, 0);">
+                <i class="far fa-calendar"></i>&nbsp; Day of visite
+              </div>
+              <hr>
+              <ng-container>
+                <div class="text-primary f-14 m-b-10">
+                  <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                    <div class="media mb-2">
+                      <div class="media-body">
+                        <h6>{{this.newInfoOneContract.jourInfogerance}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="col-md-12 col-lg-4">
+              <div class="text-primary f-14 m-b-10">
+                <i class="far fa-handshake"></i>&nbsp; Number of intervention per month
+              </div>
+              <hr>
+              <div class="text-primary f-14 m-b-10">
+                <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                  <div class="media mb-2">
+                    <div class="media-body">
+                      <h6>{{this.newInfoOneContract.nbrJourChesClient}}</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="this.newInfoOneContract.type != 'INFOGERANCE'" class="row">
+            <div class="col-md-12 col-lg-4">
+              <div class="text-primary f-14 m-b-10" style="color: rgb(255, 0, 0);">
+                <i class="far fa-calendar-alt"></i>&nbsp; Start date
+              </div>
+              <hr>
+              <ng-container>
+                <div class="text-primary f-14 m-b-10">
+                  <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                    <div class="media mb-2">
+                      <div class="media-body">
+                        <h6>{{this.newInfoOneContract.startDate | date: 'dd-MM-yyyy'}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="col-md-12 col-lg-4">
+              <div class="text-primary f-14 m-b-10">
+                <i class="far fa-calendar-alt"></i>&nbsp; End date
+              </div>
+              <hr>
+              <div class="text-primary f-14 m-b-10">
+                <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                  <div class="media mb-2">
+                    <div class="media-body">
+                      <h6>{{this.newInfoOneContract.endDate | date: 'dd-MM-yyyy'}}</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+              <div class="text-primary f-14 m-b-10">
+                <i class="far  fa-clock"></i>&nbsp; SLA
+              </div>
+              <hr>
+              <ng-container>
+                <div class="text-primary f-14 m-b-10">
+                  <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                    <div class="media mb-2">
+                      <div class="media-body">
+                        <h6>{{this.newInfoOneContract.sla + ' H'}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="m-b-20">
+        <hr>
+        <h6>Teams management</h6>
+        <span (click)="isCollapsed5 = !isCollapsed5" [attr.aria-expanded]="!isCollapsed5"><a href="javascript:">Show
+            more</a> </span>
+        <div id="collapseExample5" [ngbCollapse]="isCollapsed5" class="table-responsive form-material">
+          <div class="text-right">
+            <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+              (click)="addtemsToContract()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-plus">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+            <br><br>
+          </div>
+          <style>
+            #tabColler.table-hover tbody tr:hover {
+              background-color: rgb(138, 188, 226);
+            }
+
+            #tabColler tbody {
+              background-color: rgb(173, 218, 212);
+              color: rgb(111, 105, 105);
+            }
+          </style>
+          <table style="text-align: center;" id="tabColler" datatable
+            class="table table-striped table-bordered nowrap table-hover">
+            <thead class="task-page" style="background-color: rgb(58, 114, 179);">
+              <tr>
+                <th>First name & last name</th>
+                <th>Role </th>
+                <th>Escalation level</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="this.responsableEquipeTechnique.nomPrinom != ''">
+                <!-- <td>#12</td> -->
+                <td class="text-center"> {{this.responsableEquipeTechnique.nomPrinom}}</td>
+                <td class="text-center">Technical Team Manager</td>
+                <td class="text-center"> Level 3 </td>
+                <td class="text-center">
+                  <i (click)="deleteResponsableEquipe()" class="fas fa-trash-alt text-danger"></i>&nbsp;
+                </td>
+              </tr>
+              <ng-container *ngIf="this.newEquipeTechniquet.length !=0">
+                <tr *ngFor="let item of this.newEquipeTechniquet">
+                  <td class="text-center">{{item.tech.firstName+' '+item.tech.lastName}}</td>
+                  <td class="text-center">Team member</td>
+                  <td class="text-center" *ngIf="item.niveauEscalade == 'l1'"> Level 1 </td>
+                  <td class="text-center" *ngIf="item.niveauEscalade == 'l2'"> Level 2 </td>
+                  <td class="text-center">
+                    <i (click)="deleteMemeberEquipe(item.tech._id)" class="fas fa-trash-alt text-danger"></i>&nbsp;
+                    <!-- <i (click)="updateTeechToContract(item)" class="fas fa-edit text-warning"></i> -->
+                  </td>
+                </tr>
+              </ng-container>
+              <tr *ngIf="this.responsableEquipeTechnique.nomPrinom == '' && this.newEquipeTechniquet.length == 0 ">
+                <td colspan="4" class="text-center">
+                  <h5>No Data Found</h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="m-b-20">
+        <hr>
+        <h6>Customer management</h6>
+        <span (click)="isCollapsed6 = !isCollapsed6" [attr.aria-expanded]="!isCollapsed6"><a href="javascript:">Show
+            more</a> </span>
+        <div id="collapseExample5" [ngbCollapse]="isCollapsed6" class="table-responsive form-material">
+          <div class="text-right">
+            <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+              (click)="openAddNewOledCustomers()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-plus">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+            <br><br>
+          </div>
+          <style>
+            #tabDeux.table-hover tbody tr:hover {
+              background-color: rgb(173, 203, 218);
+            }
+
+            #tabDeux tbody {
+              background-color: rgb(138, 188, 226);
+              color: rgb(111, 105, 105);
+            }
+          </style>
+          <table style="text-align: center;" id="tabDeux" datatable
+            class="table table-striped table-bordered nowrap table-hover">
+            <thead>
+              <tr>
+                <th>Company name</th>
+                <th>Email </th>
+                <th>Phon number </th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody class="task-page">
+              <tr *ngIf="this.newVisAvis._id  != ''">
+                <td class="text-center"> {{this.newVisAvis.company}}</td>
+                <td class="text-center">{{this.newVisAvis.email}}</td>
+                <td class="text-center">{{this.newVisAvis.tel}}</td>
+                <td class="text-center"> Contract manager</td>
+                <td class="text-center" *ngIf="this.newVisAvis.valid == true">Enable </td>
+                <td class="text-center" *ngIf="this.newVisAvis.valid == false"> disable</td>
+                <td class="text-center">
+                  <i (click)="deleteVisaAvisContract(this.newVisAvis._id)"
+                    class="fas fa-trash-alt text-danger"></i>&nbsp;
+                  <!-- <i class="fas fa-edit text-warning"></i> -->
+                </td>
+              </tr>
+              <ng-container *ngIf="this.newAssociatedCustomerList.length !=0">
+                <tr *ngFor="let item of this.newAssociatedCustomerList">
+                  <td class="text-center">{{item.company}}</td>
+                  <td class="text-center">{{item.email}}</td>
+                  <td class="text-center">{{item.tel}}</td>
+                  <td class="text-center">Customer user</td>
+                  <td class="text-center" *ngIf="item.valid == true">Enable </td>
+                  <td class="text-center" *ngIf="item.valid == false"> Disable</td>
+                  <td class="text-center">
+                    <i (click)="deleteUserContract(item._id)" class="fas fa-trash-alt text-danger"></i>&nbsp;
+                    <i (click)="openUpdatUsers(item)" class="fas fa-edit text-warning"></i>
+                  </td>
+                </tr>
+              </ng-container>
+              <tr *ngIf="this.newVisAvis._id == '' && this.newAssociatedCustomerList.length ==0">
+                <td colspan="6" class="text-center">
+                  <h5>No Data Found</h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="m-b-20">
+        <hr>
+        <h6>Preventive maintenance visit</h6>
+        <span (click)="isCollapsed7 = !isCollapsed7" [attr.aria-expanded]="!isCollapsed7"><a href="javascript:">Show
+            more</a> </span>
+        <div id="collapseExample5" [ngbCollapse]="isCollapsed7" class="table-responsive form-material">
+          <div class="text-right">
+            <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+              (click)="openAddVistepreventive()">
+              <!-- this.contractRef._id -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-plus">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+            <br><br>
+          </div>
+          <style>
+            #tabDeux3.table-hover tbody tr:hover {
+              background-color: rgb(138, 188, 226);
+            }
+
+            #tabDeux3 tbody {
+              background-color: rgb(173, 218, 212);
+              color: rgb(111, 105, 105);
+              /* Optionnel : pour rendre le texte de l'en-tête blanc */
+            }
+          </style>
+          <table style="text-align: center;" id="tabDeux3" datatable
+            class="table table-striped table-bordered nowrap table-hover">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Site Name</th>
+                <th>Assigned to</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody class="task-page">
+              <ng-container *ngIf="this.newplanificationVistePreventive.length !=0">
+                <tr *ngFor="let item of this.newplanificationVistePreventive ">
+                  <td class="text-center">{{item.title}}</td>
+                  <td class="text-center">{{item.startDate}}</td>
+                  <td class="text-center">{{item.endDate}}</td>
+                  <td class="text-center">{{item.status}}</td>
+                  <td class="text-center">{{item.siteID.nomSite}}</td>
+                  <td *ngIf="item.technicien" class="text-center">{{item.technicien.firstName+'
+                    '+item.technicien.firstName}}</td>
+                  <td class="text-center" *ngIf="!item.technicien">Not assingete yet</td>
+                  <td class="text-center">
+                    <i (click)="deleteVisite(item._id)" class="fas fa-trash-alt text-danger"></i>&nbsp;
+                    <i (click)="openUpdatvisdite(item)" class="fas fa-edit text-warning"></i>
+                  </td>
+                </tr>
+              </ng-container>
+              <tr *ngIf="this.newVisAvis._id == '' && this.newplanificationVistePreventive.length ==0">
+                <td colspan="7" class="text-center">
+                  <h5>No Data Found</h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br>
+    </app-card>
+    <app-card *ngIf="this.showDataSites == true" [customHeader]="true" [options]="false">
+      <div class="app-card-header">
+        <ng-container>
+          <h5 class="mb-3">
+            <i class="fas fa-building m-r-5"></i>
+            {{this.infoOneSite.nomSite}}
+          </h5>
+        </ng-container>
+      </div>
+      <div class="m-b-20">
+        <div class="row">
+          <div class="col text-left">
+            <h5 class="mb-3">Information about the site</h5>
+            <br>
+          </div>
+          <div class="col text-right">
+            <div class="col text-right">
+              <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                (click)="openUpdateSites()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-edit">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19 3 20 4 16l12.5-12.5z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="m-b-20 col-sm-12">
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+
+              <div class="text-primary f-14 m-b-10" style="color: rgb(255, 0, 0);">
+                <i class="far fa-building"></i>&nbsp; Site Name
+              </div>
+              <hr>
+              <ng-container>
+                <div class="text-primary f-14 m-b-10">
+                  <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                    <div class="media mb-2">
+                      <div class="media-body">
+                        <h6>{{this.infoOneSite.nomSite}}</h6>
+                        <!-- <p>{{this.responsableEqipe.email}}</p>   -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="text-primary f-14 m-b-10" style="color: rgb(255, 0, 0);">
+                <i class="far fa-map"></i>&nbsp; Address
+              </div>
+              <hr>
+              <ng-container>
+                <div class="text-primary f-14 m-b-10">
+                  <div id="assignUsers" class="user-box assign-user taskboard-right-users">
+                    <div class="media mb-2">
+                      <div class="media-body">
+                        <h6>{{this.infoOneSite.adress}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="m-b-20">
+        <hr>
+        <h6>List of hard equipment</h6>
+        <span (click)="isCollapsed99 = !isCollapsed99" [attr.aria-expanded]="!isCollapsed99"><a href="javascript:">Show
+            more</a> </span>
+        <div id="collapseExample5" [ngbCollapse]="isCollapsed99" class="table-responsive form-material">
+          <br>
+          <div class="row">
+            <div class="col text-left">
+              <button id="import-csv-btn" type="" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                (click)="importCSV()">
+                Import CSV
+              </button>
+              <button id="export-csv-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                (click)="exportToPDF()">
+                Export PDF
+              </button>
+            </div>
+            <div class="col text-right ">
+              <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                (click)="openAddEquipement()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-plus">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+              <br><br>
+            </div>
+          </div>
+          <div class="app-card-header">
+          </div>
+          <style>
+            #tabCollerz.table-hover tbody tr:hover {
+              background-color: rgb(138, 188, 226);
+            }
+
+            #tabCollerz tbody {
+              background-color: rgb(173, 218, 212);
+              color: rgb(111, 105, 105);
+              /* Optionnel : pour rendre le texte de l'en-tête blanc */
+            }
+          </style>
+          <table style="text-align: center;" id="tabCollerz" datatable
+            class="table table-striped table-bordered nowrap table-hover">
+            <thead class="task-page" style="background-color: rgb(58, 114, 179);">
+              <tr>
+                <th>Equipment Name</th>
+                <th>Serial Number</th>
+                <th>Support Type</th>
+                <th>Days left for support</th>
+                <th>Start Date Support</th>
+                <th>End Date Support</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="this.infoOneSite.listEquipment.length !=0">
+                <tr *ngFor="let item of this.infoOneSite.listEquipment">
+                  <td class="text-center">{{item.nomPice}}</td>
+                  <td class="text-center">{{item.SN}}</td>
+                  <td class="text-center">{{item.TypeSupport.supportName}}</td>
+                  <td class="text-center text-light" *ngIf="getNbrJour(item.endDateSupport) < 0"
+                    style="background-color: rgb(132, 122, 122);">End Support</td>
+                  <td class="text-center text-light"
+                    *ngIf="getNbrJour(item.endDateSupport) >= 2 && getNbrJour(item.endDateSupport) < 10"
+                    style="background-color: rgb(255, 221, 0);">{{getNbrJour(item.endDateSupport)+' Days'}}</td>
+                  <td class="text-center text-light"
+                    *ngIf="getNbrJour(item.endDateSupport) >= 0 && getNbrJour(item.endDateSupport) < 2"
+                    style="background-color: rgb(255, 0, 0);">{{getNbrJour(item.endDateSupport)+' Days'}}</td>
+                  <td class="text-center " *ngIf="getNbrJour(item.endDateSupport) >= 10">
+                    {{getNbrJour(item.endDateSupport)+' Days'}}</td>
+
+                  <td class="text-center">{{item.startDateSupport}}</td>
+                  <td class="text-center">{{item.endDateSupport}}</td>
+                  <td class="text-center" *ngIf="item.valid">Active</td>
+                  <td class="text-center" *ngIf="!item.valid">Inactive</td>
+                  <td class="text-center">
+                    <i (click)="upadteEqupemont(item)" class="fas fa-edit f-18 ml-2"></i>
+                    <i (click)="deleteEqupemont(item._id)" class="fas fa-trash-alt f-18 ml-2"></i>
+                  </td>
+                </tr>
+              </ng-container>
+              <tr *ngIf="this.infoOneSite.listEquipment.length == 0">
+                <td colspan="7" class="text-center">
+                  <h5>No Data Found</h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div class="m-b-20">
+        <hr>
+        <h6>list of softe equipment</h6>
+        <span (click)="isCollapsed991 = !isCollapsed991" [attr.aria-expanded]="!isCollapsed991"><a
+            href="javascript:">Show
+            more</a> </span>
+        <div id="collapseExample5" [ngbCollapse]="isCollapsed991" class="table-responsive form-material">
+          <br>
+
+
+          <div class="row">
+            <div class="col text-left">
+              <button id="import-csv-btn" type="" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                (click)="importCSV2()">
+                Import CSV
+              </button>
+              <button id="export-csv-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                (click)="exportToPDF2()">
+                Export PDF
+              </button>
+            </div>
+            <div class="col text-right ">
+              <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                (click)="openAddEquipementSoft()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-plus">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+              <br><br>
+            </div>
+          </div>
+
+          <div class="app-card-header">
+          </div>
+          <style>
+            #tabColler10.table-hover tbody tr:hover {
+              background-color: rgb(138, 188, 226);
+
+            }
+
+            #tabColler10 tbody {
+              background-color: rgb(173, 218, 212);
+              color: rgb(111, 105, 105);
+            }
+          </style>
+          <table style="text-align: center;" id="tabColler10" datatable
+            class="table table-striped table-bordered nowrap table-hover">
+            <thead class="task-page" style="background-color: rgb(58, 114, 179);">
+              <tr>
+                <th>Equipment Name</th>
+                <th>Version </th>
+                <th>Constructure</th>
+                <th>Support type</th>
+                <th>Days left for support</th>
+                <th>Start Date Support</th>
+                <th>End Date Support</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="this.newListEquipmontSoft.length !=0">
+                <tr *ngFor="let item of this.newListEquipmontSoft">
+                  <td class="text-center">{{item.equipmentName}}</td>
+                  <td class="text-center">{{item.version}}</td>
+                  <td class="text-center"> {{item.constructure}} </td>
+                  <td class="text-center"> {{item.TypeSupport.supportName}} </td>
+                  <td class="text-center text-light" *ngIf="getNbrJour(item.endDateSupport) < 0"
+                    style="background-color: rgb(132, 122, 122);">End Support</td>
+                  <td class="text-center text-light"
+                    *ngIf="getNbrJour(item.endDateSupport) >= 2 && getNbrJour(item.endDateSupport) < 10"
+                    style="background-color: rgb(255, 221, 0);">{{getNbrJour(item.endDateSupport)+' Days'}}</td>
+                  <td class="text-center text-light " 
+                    *ngIf="getNbrJour(item.endDateSupport) >= 0 && getNbrJour(item.endDateSupport) < 2"
+                    style="background-color: rgb(255, 0, 0);">{{getNbrJour(item.endDateSupport)+' Days'}}</td>
+                  <td class="text-center " *ngIf="getNbrJour(item.endDateSupport) >= 10">
+                    {{getNbrJour(item.endDateSupport)+' Days'}}</td>
+                  <td class="text-center"> {{item.startDateSupport}} </td>
+                  <td class="text-center"> {{item.endDateSupport}} </td>
+                  <td class="text-center" *ngIf="item.valid">Active</td>
+                  <td class="text-center" *ngIf="!item.valid"> Inactive</td>
+
+                  <td class="text-center">
+                    <i (click)="upadteEqupemontSoft(item)" class="fas fa-edit f-18 ml-2"></i>
+                    <i (click)="deleteEqupemontSoft(item._id)" class="fas fa-trash-alt f-18 ml-2"></i>
+                </tr>
+              </ng-container>
+              <tr *ngIf="this.newListEquipmontSoft.length == 0">
+                <td colspan="8" class="text-center">
+                  <h5>No Data Found</h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br>
+    </app-card>
+    <app-card *ngIf="this.showDataContract == false && this.showDataSites == false " [customHeader]="true"
+      [options]="false">
+      <div class="centered-content" style="height: 400px;">
+        <h1>No contract or sites selected</h1>
+      </div>
+    </app-card>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{mytitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form class="form" name="form" #f="ngForm" (ngSubmit)="this.Onsubmit(f)">
+        <div class="form-group">
+            <label for="sla">Title</label>
+            <input type="text" class="form-control" placeholder="Title" id="title" name="title" ngModel
+                [(ngModel)]="this.model.title" #title="ngModel" required>
+            <!-- <span>The SAL must be in Hour</span> -->
+            <div *ngIf="title.touched && title.errors?.required" class="error">Title required</div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" [(ngModel)]="this.model.description" #description="ngModel"
+                name="description" required></textarea>
+            <div class="invalid-feedback" *ngIf="description.touched && description.errors?.required" class="error">
+                Description required </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Select Priority</label>
+            <select class="form-control" name="validation-cmbGear" [(ngModel)]="this.model.neveuxEsclade"
+                (change)="getNeveuxEsclade($event)" #neveuxEsclade="ngModel" name="neveuxEsclade" required>
+                <option value="level1">Low</option>
+                <option value="level2">Medium</option>
+                <option value="level3">High</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="neveuxEsclade.touched && neveuxEsclade.errors?.required" class="error">
+                Priority required </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="form-label">Select Site</label>
+            <select class="form-control" name="validation-cmbGear" [(ngModel)]="this.model.siteId"
+                (change)="getSiteId($event)" #siteId="ngModel" name="siteId" required>
+                <ng-container *ngFor="let item of this.listSite">
+                    <option value="{{item._id}}">{{item.nomSite}}</option>
+                </ng-container>
+            </select>
+            <div class="invalid-feedback" *ngIf="siteId.touched && siteId.errors?.required" class="error">Site required
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="this.contractObject.type == 'SUPPORT AND MAINTENANCE HARD' || this.contractObject.type == 'SUPPORT AND MAINTENANCE SOFT AND HARD'">
+            <label class="form-label">Select Equipment hard</label>
+            <select [disabled]="!siteSelected == true" class="form-control" name="validation-cmbGear"
+                [(ngModel)]="this.model.equipmentHardId" (change)="getEquipmentId($event)" #equipmentHardId="ngModel"
+                name="equipmentHardId" required>
+                    <ng-container *ngFor="let item of this.listEquipmontHard">
+                        <option value="{{item._id}}">{{item.nomPice}}</option>
+                    </ng-container>
+            </select>
+        </div>
+        <div class="form-group" *ngIf="this.contractObject.type == 'SUPPORT AND MAINTENANCE SOFT' || this.contractObject.type == 'SUPPORT AND MAINTENANCE SOFT AND HARD'">
+            <label class="form-label">Select Equipment Soft</label>
+            <select [disabled]="!siteSelected" class="form-control" name="validation-cmbGear"
+                [(ngModel)]="this.model.equipmentSoftId" (change)="getEquipmentId($event)" #equipmentSoftId="ngModel"
+                name="equipmentSoftId" required>
+                    <ng-container *ngFor="let item of this.listEquipmontSoft">
+                        <option value="{{item._id}}">{{item.equipmentName+' '+item.version}}</option>
+                    </ng-container>
+            </select>
+        </div>
+
+
+
+
+
+
+        <span class="text-danger"><b>*You must select a site to enable the Equipment list</b></span>
+        <div class="custom-file" *ngIf="this.add">
+            <input 
+              type="file" 
+              class="custom-file-input" 
+              multiple 
+              id="validatedCustomFile" 
+              required 
+              (change)="onFileSelected($event)">
+            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+            <br><br>
+            <span>{{ fileNames  }}</span>
+            <div class="invalid-feedback">Example invalid custom file feedback</div>
+          </div>
+        <div class="modal-footer">
+            <button *ngIf="!this.add" type="submit" [disabled]="f.invalid"
+                class="btn btn-outline-warning">Update</button>
+
+            <button *ngIf="this.add" type="submit" [disabled]="f.invalid" class="btn btn-outline-primary">Save</button>
+            <button type="button" class="btn btn-outline-dark"
+                (click)="activeModal.close('Close click')">Fermer</button>
+        </div>
+    </form>
+</div>

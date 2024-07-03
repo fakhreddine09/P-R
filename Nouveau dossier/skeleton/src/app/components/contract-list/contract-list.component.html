@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card cardSize" cardTitle="Hello Card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col text-left">
+                        <!-- <h5><a href="javascript:">Collapsible Group Item #3</a></h5> -->
+                        <h6>Folder List</h6>
+                    </div>
+                    <div class="col text-right">
+                        <button id="edit-btn" type="button"
+                            class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="openAddFolder()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-plus">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- <perfect-scrollbar ngClass="elite-scroll" [style.max-width]="'100%'" [style.max-height]="'calc(100vh - 300px)'" [usePSClass]="'elite'" [disabled]="null" [autoPropagation] ="true"> -->
+                <div class="form-group">
+                    <!-- <label for="inputAddress">Address</label> -->
+                    <input type="text" class="form-control" id="inputAddress" [(ngModel)]="term" placeholder="Search">
+                </div>
+
+
+                <div class="col-xl-12">
+                    <div class="row">
+                        <div class="col-sm-4" *ngFor="let item of listContract | filter: term">
+                            <hr>
+                            <div class="card" [style.background-color]="item.colorfoldr">
+                                <div class="card-body"
+                                    [ngClass]="{'text-light': isLightColor(item.colorfoldr), 'text-dark': !isLightColor(item.colorfoldr)}">
+                                    <i>
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="flex: 1;">
+                                                <h5 *ngIf="item.colorfoldr != '#ffffff'" class="card-title text-light">{{ item.name }}</h5>
+                                                <h5 *ngIf="item.colorfoldr == '#ffffff'" class="card-title text-dark">{{ item.name }}</h5>
+                                            </div>
+                                            <!-- <img [src]="item.logo.path" alt="" width="50px" height="50px" srcset="" style="border-radius: 50%;"> -->
+                                            <img *ngIf="item.colorfoldr != '#ffffff'"  [src]="item.logo.path" alt="" width="50px" height="50px" srcset="" style="border-radius: 50%; border: 2px solid rgb(255, 255, 255);">
+                                            <img *ngIf="item.colorfoldr == '#ffffff'" [src]="item.logo.path" alt="" width="50px" height="50px" srcset="" style="border-radius: 50%; border: 2px solid black;">
+
+                                        </div>
+                                    </i>
+                                    <h6 *ngIf="item.colorfoldr != '#ffffff'" [ngClass]="'text-light'" class="card-text">
+                                        {{ item.contractId.length }} Contract </h6>
+                                    <h6 *ngIf="item.colorfoldr == '#ffffff'" [ngClass]="'text-dark'" class="card-text">
+                                        {{ item.contractId.length }} Contract </h6>
+                                    <p *ngIf="item.colorfoldr != '#ffffff'" [ngClass]="'text-light'"
+                                        style="text-align:right;" class="card-text">{{ item.creationDate |
+                                        date:'yyyy-MM-dd' }}</p>
+                                    <p *ngIf="item.colorfoldr == '#ffffff'" [ngClass]="'text-dark'"
+                                        style="text-align:right;" class="card-text">{{ item.creationDate |
+                                        date:'yyyy-MM-dd' }}</p>
+
+                                    <a style="text-decoration: underline;" *ngIf="item.colorfoldr != '#ffffff'"
+                                        [ngClass]="'text-light'"
+                                        [routerLink]="['/test/folderDerailes/detailes', item._id]">Show Details</a>
+                                    <a style="text-decoration: underline;" *ngIf="item.colorfoldr == '#ffffff'"
+                                        [routerLink]="['/test/folderDerailes/detailes', item._id]">Show Details</a>
+                                    <hr>
+                                    <div class="text-right">
+                                        <i *ngIf="item.colorfoldr != '#ffffff'" [ngClass]="'text-light'"
+                                            (click)="deleteFolder(item._id)" class="fas fa-trash-alt"></i>&nbsp;
+                                        <i *ngIf="item.colorfoldr == '#ffffff'" [ngClass]="'text-dark'"
+                                            (click)="deleteFolder(item._id)" class="fas fa-trash-alt"></i>&nbsp;
+                                        <i *ngIf="item.colorfoldr != '#ffffff'" [ngClass]="'text-light'"
+                                            (click)="openUpdateFolder(item)" class="fas fa-edit"></i>
+                                        <i *ngIf="item.colorfoldr == '#ffffff'" [ngClass]="'text-dark'"
+                                            (click)="openUpdateFolder(item)" class="fas fa-edit"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,129 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-9">
+                        <h3 class="d-inline-block mb-0">Tickets List</h3>
+                    </div>
+                  
+                </div>
+            </div>
+            <div class="card shadow-none">
+                <div class="card-body shadow border-0">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control add_task_todo" placeholder="Search here by Title"
+                                    [(ngModel)]="term" required="">
+                            </div>
+                        </div>
+                        <div class="col text-right">
+                            <button type="button" class="btn btn-primary m-0" (click)="openAddTickets()">
+                                New Ticket
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive" style="text-align: center;">
+                        <table class="table table-hover" >
+                            <thead>
+                                <tr>
+                                    <th class="text-center" class="border-top-0">Title</th>
+                                    <th class="text-center" class="border-top-0">Site Name</th>
+                                    <th class="text-center" class="border-top-0">Equipment Name:</th>
+                                    <th class="text-center" class="border-top-0">Equipment Ref</th>
+                                    <th class="text-center" class="border-top-0">Assigned to</th>
+                                    <th class="text-center" class="border-top-0">Priority</th>
+                                    <th class="text-center" class="border-top-0">Date of creation</th>
+                                    <th class="text-center" class="border-top-0">Status</th>
+                                    <th class="text-center" class="border-top-0">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of this.listTickets|filter:term | slice: (page - 1) * pageSize:page * pageSize">
+                                <tr>
+                                    <td class="text-center" >{{item.title}}</td>
+                                    <td class="text-center" >{{item.siteId.nomSite}}</td>
+                                    <td class="text-center"  *ngIf="item.equipmentHardId">{{item.equipmentHardId.nomPice}}</td>
+                                    <td class="text-center"  *ngIf="item.equipmentHardId">{{item.equipmentHardId.SN}}</td>
+                                    <td class="text-center"  *ngIf="item.equipmentSoftId">{{item.equipmentSoftId.equipmentName}}</td>
+                                    <td class="text-center"  *ngIf="item.equipmentSoftId">{{item.equipmentSoftId.version}}</td>
+                                    <td class="text-center"  >
+                                        <ng-container *ngFor="let item2 of item.technicienId">
+
+                                            <a href="javascript:"><img width="40px" height="40px" srcset=""
+                                                    style="border-radius: 50%; border: 2px solid rgb(255, 255, 255);"
+                                                    class="img-fluid img-radius mr-1" src="{{item2.image.path}}" alt=""
+                                                    [placement]="'bottom'"
+                                                    ngbTooltip="{{item2.firstName +' '+item2.lastName}}"></a>
+                                        </ng-container>
+                                        <a href="javascript:"><i class="fas fa-plus"></i></a>
+                                    </td>
+                                    <td class="text-center" >
+                                        <div class="box-body" style="margin-left: 23%;">
+                                            <bar-rating *ngIf="item.neveuxEsclade == 'level1'" rate="1" [max]="3"
+                                                [readOnly]="true" [theme]="'movie'" [showText]="true"
+                                                [titles]="['Low', 'Medium' , 'High']"></bar-rating>
+                                            <bar-rating *ngIf="item.neveuxEsclade == 'level2'" rate="2" [max]="3"
+                                                [readOnly]="true" [theme]="'movie'" [showText]="true"
+                                                [titles]="['Low', 'Medium' , 'High']"></bar-rating>
+                                            <bar-rating *ngIf="item.neveuxEsclade == 'level3'" rate="3" [max]="3"
+                                                [readOnly]="true" [theme]="'movie'" [showText]="true"
+                                                [titles]="['Low', 'Medium' , 'High']"></bar-rating>
+                                        </div>
+                                    </td>
+                                    <td class="text-center" >
+                                        <b> {{item.creationDate | date:'yyyy-MM-dd HH:MM' }} </b>
+                                    </td>
+                                    <td class="text-center" >
+                                        <div *ngIf="item.status == 'Resolve'"
+                                            class="checkbox checkbox-success d-inline">
+                                            <input type="checkbox" name="checkbox-s-1" id="checkbox-s-1" checked>
+                                            <label for="checkbox-s-1" class="cr text-success">Resolve</label>
+                                        </div>
+
+                                        <div *ngIf="item.status == 'Expired'" class="form-group">
+                                            <div class="radio radio-danger d-inline">
+                                                <input type="radio" checked>
+                                                <label for="radio-d-1" class="cr text-danger">Expired</label>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="item.status == 'Assigned'" class="radio radio-primary d-inline">
+                                            <input type="radio" checked>
+                                            <label for="radio-p-1" class="cr text-primary">Assigned</label>
+                                        </div>
+                                    </td>
+                                    <td class="text-center" >
+                                        <a href="javascript:" class="text-muted">
+                                            <i [placement]="'left'" (click)="openUpdate(item)" ngbTooltip=" Edit Ticket" class="feather icon-edit mr-2 text-warning"  style="font-size: 18px;"></i></a>
+                                        <a href="javascript:" class="text-muted"><i [placement]="'bottom'" (click)="openCancel(item._id)" ngbTooltip="Cancel Ticket "
+                                                class="feather icon-trash-2 mr-2 text-danger" style="font-size: 18px;"></i></a>
+                                        <a href="javascript:" class="text-muted text-success"><i [placement]="'right'"
+                                                ngbTooltip="Show Details " class="feather mr-2 icon-eye" style="font-size: 18px;"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="pagination-block text-center">
+                            <div class="d-flex justify-content-between p-2">
+                                <ngb-pagination [(page)]="page" [pageSize]="pageSize"
+                                    [collectionSize]="listTickets.length">
+                                </ngb-pagination>
+                                <div>
+                                    Objects per page:
+                                    <select class="custom-select" style="width: auto" name="pageSize"
+                                        (change)="handlePageSizeChange($event)">
+                                        <option *ngFor="let size of pageSizes" [ngValue]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
