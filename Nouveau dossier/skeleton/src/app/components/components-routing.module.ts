@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'boardClient', loadChildren: () => import('./board-client/board-client.module').then(m => m.BoardClientModule) },
   { path: 'typesupports', loadChildren: () => import('./typesupports/typesupports.module').then(m => m.TypesupportsModule) },
   { path: 'clanderVisitepreventive', loadChildren: () => import('./clander-visitepreventive/clander-visitepreventive.module').then(m => m.ClanderVisitepreventiveModule) },
+  
 ];
 
 @NgModule({

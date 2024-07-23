@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './theme/shared/shared.module';
 import { AppComponent } from './app.component';
@@ -10,34 +10,41 @@ import { AuthComponent } from './theme/layout/auth/auth.component';
 import { NavigationComponent } from './theme/layout/admin/navigation/navigation.component';
 import { NavLogoComponent } from './theme/layout/admin/navigation/nav-logo/nav-logo.component';
 import { NavContentComponent } from './theme/layout/admin/navigation/nav-content/nav-content.component';
-import {NavigationItem} from './theme/layout/admin/navigation/navigation';
 import { NavGroupComponent } from './theme/layout/admin/navigation/nav-content/nav-group/nav-group.component';
 import { NavCollapseComponent } from './theme/layout/admin/navigation/nav-content/nav-collapse/nav-collapse.component';
 import { NavItemComponent } from './theme/layout/admin/navigation/nav-content/nav-item/nav-item.component';
 import { NavBarComponent } from './theme/layout/admin/nav-bar/nav-bar.component';
-import {ToggleFullScreenDirective} from './theme/shared/full-screen/toggle-full-screen';
-import {NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import { ToggleFullScreenDirective } from './theme/shared/full-screen/toggle-full-screen';
+import { NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavLeftComponent } from './theme/layout/admin/nav-bar/nav-left/nav-left.component';
 import { NavSearchComponent } from './theme/layout/admin/nav-bar/nav-right/nav-search/nav-search.component';
 import { NavRightComponent } from './theme/layout/admin/nav-bar/nav-right/nav-right.component';
-import {ChatUserListComponent} from './theme/layout/admin/nav-bar/nav-right/chat-user-list/chat-user-list.component';
+import { ChatUserListComponent } from './theme/layout/admin/nav-bar/nav-right/chat-user-list/chat-user-list.component';
 import { FriendComponent } from './theme/layout/admin/nav-bar/nav-right/chat-user-list/friend/friend.component';
-import {ChatMsgComponent} from './theme/layout/admin/nav-bar/nav-right/chat-msg/chat-msg.component';
+import { ChatMsgComponent } from './theme/layout/admin/nav-bar/nav-right/chat-msg/chat-msg.component';
 import { ConfigurationComponent } from './theme/layout/admin/configuration/configuration.component';
-// import { HomeModule } from './home/home.module';
-
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FormsModule } from '@angular/forms';
-import { AddAndUpdateContractComponent } from './components/contractMang/add-and-update-contract/add-and-update-contract.component';
 import { ComponentsModule } from './components/components.module';
+import { AddAndUpdateContractComponent } from './components/contractMang/add-and-update-contract/add-and-update-contract.component';
 import { CsvParserService } from './services/csv-parser.service';
 import { TokenStorageService } from './services/token-storage.service';
-import { AuthInterceptor } from "./interceptors/auth.interceptor";
-
-@NgModule({
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { NavigationItem } from './theme/layout/admin/navigation/navigation';
+import { MapComponent } from '../map/map.component';
+import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { GeocodingService } from '../map/geocoding.service';
+import { SiteFormComponent } from '../app/site-form/site-form.component';
+const routes: Routes = [
+  { path: '', component: AppComponent }, // Route par défaut
+  { path: 'map', component: MapComponent }, // Route pour votre carte
+  // Ajoutez d'autres routes ici si nécessaire
+]
+@NgModule({  
   declarations: [
-    // AddAndUpdateContractComponent,
     AppComponent,
+  
     AdminComponent,
     AuthComponent,
     NavigationComponent,
@@ -55,8 +62,13 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
     FriendComponent,
     ChatMsgComponent,
     ConfigurationComponent,
+    MapComponent,
+    SiteFormComponent
+    
+    
   ],
-  imports: [
+imports: [
+    FormsModule,
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
@@ -65,20 +77,22 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
     NgbTooltipModule,
     NgbButtonsModule,
     HttpClientModule,
-    HttpClientModule,
     Ng2SearchPipeModule,
-    ComponentsModule ,
-    
-    
+    AppRoutingModule,
+    FormsModule,
     NgbTabsetModule,
-    // HomeModule
+    RouterModule.forRoot(routes),
+    RouterModule, // Ensure RouterModule is imported if using routerLink
+    CommonModule
   ],
   providers: [
-    NavigationItem,CsvParserService,
-    TokenStorageService, 
+    NavigationItem,
+    CsvParserService,
+    TokenStorageService,
+    GeocodingService ,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [RouterModule]
 })
 export class AppModule { }
-// ng g m components --route home --module app.module

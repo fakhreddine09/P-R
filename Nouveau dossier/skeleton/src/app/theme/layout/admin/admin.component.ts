@@ -8,12 +8,21 @@ import {Location} from '@angular/common';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  address: string = '';
+  clientId: string = '';
+  http: any;
+  geocodingService: any;
+  longitude: any;
+  latitude: any;
+onSubmit() {
+throw new Error('Method not implemented.');
+}
   public eliteConfig: any;
   public navCollapsed: boolean;
   public navCollapsedMob: boolean;
   public windowWidth: number;
 
-  constructor(private zone: NgZone, private location: Location) {
+  constructor(private zone: NgZone, private location: Location,) {
     this.eliteConfig = DattaConfig.config;
 
     let current_url = this.location.path();
@@ -28,6 +37,25 @@ export class AdminComponent implements OnInit {
     this.windowWidth = window.innerWidth;
     this.navCollapsed = (this.windowWidth >= 992) ? this.eliteConfig['collapse-menu'] : false;
     this.navCollapsedMob = false;
+    if (!this.clientId) {
+      alert('Client ID is required');
+      return;
+    }
+
+    this.http.post('/api/save-location', { address: this.address, clientId: this.clientId }).subscribe(response => {
+      console.log('Location saved successfully');
+    }, error => {
+      console.error('Error saving location', error);
+    });
+    this.geocodingService.geocode(this.address).subscribe((results: any) => {
+      if (results && results.length > 0) {
+        this.latitude = results[0].lat;
+        this.longitude = results[0].lon;
+        this.saveToBackend(this.address, this.latitude, this.longitude);
+      } else {
+        alert('Location not found');
+      }
+    });
   }
 
   ngOnInit() {
@@ -35,10 +63,12 @@ export class AdminComponent implements OnInit {
       this.eliteConfig['layout'] = 'vertical';
       setTimeout(() => {
         document.querySelector('.pcoded-navbar').classList.add('menupos-static');
-        (document.querySelector('#nav-ps-elite') as HTMLElement).style.maxHeight = '100%'; // 100% amit
+        (document.querySelector('#nav-ps-elite') as HTMLElement).style.maxHeight = '100%'; 
       }, 500);
     }
   }
+  
+
 
   navMobClick() {
     if (this.navCollapsedMob && !(document.querySelector('app-navigation.pcoded-navbar').classList.contains('mob-open'))) {
@@ -49,6 +79,16 @@ export class AdminComponent implements OnInit {
     } else {
       this.navCollapsedMob = !this.navCollapsedMob;
     }
+  }
+  
+
+  saveToBackend(address: string, clientId, ticket): void {
+    const payload = { address, clientId, ticket};
+    this.http.post('/api/save-location', payload).subscribe(response => {
+      console.log('Location saved successfully');
+    }, error => {
+      console.error('Error saving location', error);
+    });
   }
 
 }

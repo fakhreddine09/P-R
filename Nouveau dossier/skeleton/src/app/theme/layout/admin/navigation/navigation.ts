@@ -48,15 +48,15 @@ const NavigationItems = [
         classes: 'nav-item',
         icon: 'feather icon-sidebar'
       },
-      // {
-      //   id: 'accounttechnician',
-      //   title: 'Technician account',
-      //   type: 'item',
-      //   url: '/test/listTechnician',
-      //   classes: 'nav-item',
-      //   icon: 'feather icon-sidebar'
-      // }
-      // ,
+       {
+         id: 'accounttechnician',
+         title: 'Technician account',
+         type: 'item',
+         url: '/test/listTechnician',
+        classes: 'nav-item',
+        icon: 'feather icon-sidebar'
+       }
+       ,
       {
         id: 'listContrct',
         title: 'Client Folders',
@@ -125,8 +125,17 @@ const NavigationItems = [
               }
             ]
           }
+         
         ]
-      }
+      } ,
+      {
+            id: 'Map',
+            title: 'Map',
+            type: 'item',
+            url:'/map' ,
+            classes: 'nav-item',
+            icon: 'feather icon-sidebar'
+            }
     ]
   }
 ];

@@ -13,6 +13,7 @@ export class NavigationComponent implements OnInit {
   public navCollapsed;
   public navCollapsedMob;
   public windowWidth: number;
+sidebarItems: any;
 
   constructor() {
     this.eliteConfig = DattaConfig.config;

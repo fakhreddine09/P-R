@@ -7,7 +7,10 @@
         <div class="main-body">
           <div class="page-wrapper">
             <app-breadcrumb *ngIf="this.eliteConfig['layout'] === 'horizontal' || this.windowWidth <= 992"></app-breadcrumb>
+          
+            
             <router-outlet></router-outlet>
+            
           </div>
         </div>
       </div>

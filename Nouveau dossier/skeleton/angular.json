@@ -66,7 +66,10 @@
               "node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css",
               "node_modules/datatables.net-select-dt/css/select.dataTables.css",
               "node_modules/bootstrap/scss/bootstrap.scss",
-              "src/styles.scss"
+              "src/styles.scss",
+               
+              "node_modules/leaflet/dist/leaflet.css"
+               
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -82,7 +85,8 @@
               "node_modules/datatables.net-responsive/js/dataTables.responsive.js",
               "node_modules/datatables.net-select/js/dataTables.select.js",
               "node_modules/jquery/dist/jquery.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js"
+              "node_modules/datatables.net/js/jquery.dataTables.js",
+              "node_modules/leaflet/dist/leaflet.js"
             ]
           },
           "configurations": {
@@ -115,6 +119,7 @@
             }
           }
         },
+        
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
@@ -143,11 +148,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
+            ]
+            
           }
         },
         "lint": {

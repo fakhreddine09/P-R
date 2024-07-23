@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { AuthComponent } from './theme/layout/auth/auth.component';
+import { AddClientComponent } from './components/add-client/add-client.component';
+import { BoardClientComponent } from './components/board-client/board-client.component';
+import { MapComponent } from 'src/map/map.component';
+
 
 const routes: Routes = [
   {
@@ -25,14 +29,20 @@ const routes: Routes = [
       {
         path: 'test',
         loadChildren: () => import('./components/components.module').then(m => m.ComponentsModule)
-      }
+      },
+      { path: 'map', component: MapComponent }, // Chemin vers votre carte
+  // Autres routes si nécessaires
+  { path: '', redirectTo: '/map', pathMatch: 'full' } // Redirection vers la carte par défaut
+
+    
     ]
   },
   {
-    path: '',
-    component: AuthComponent,
+    path: ' board-client',
+    component:BoardClientComponent,
     children: []
   },
+  
   // ng g m components/admin --route home --module components.module
 ];
 
